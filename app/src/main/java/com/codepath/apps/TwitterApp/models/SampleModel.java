@@ -12,14 +12,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-/*
- * This is a temporary, sample model that demonstrates the basic structure
- * of a SQLite persisted Model object. Check out the DBFlow wiki for more details:
- * https://github.com/codepath/android_guides/wiki/DBFlow-Guide
- *
- * Note: All models **must extend from** `BaseModel` as shown below.
- * 
- */
 @Table(database = MyDatabase.class)
 public class SampleModel extends BaseModel {
 
@@ -27,7 +19,6 @@ public class SampleModel extends BaseModel {
 	@Column
 	Long id;
 
-	// Define table fields
 	@Column
 	private String name;
 
