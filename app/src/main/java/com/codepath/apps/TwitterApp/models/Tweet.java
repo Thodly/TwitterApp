@@ -16,7 +16,7 @@ public class Tweet implements Serializable{
     private long uid;
     private User user;
     private String createdAt;
-
+    private ArrayList<String> photoUrls;
 
     public User getUser() {
         return user;
@@ -32,7 +32,9 @@ public class Tweet implements Serializable{
     public String getCreatedAt() {
         return createdAt;
     }
-
+    public ArrayList<String> getPhotoUrls() {
+        return photoUrls;
+    }
     public static Tweet fromJSON(JSONObject jsonObject){
         Tweet tweet = new Tweet();
         try {
@@ -40,6 +42,18 @@ public class Tweet implements Serializable{
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
+            tweet.photoUrls = new ArrayList<>();
+            if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {
+                JSONArray medias = jsonObject.getJSONObject("entities").getJSONArray("media");
+                for (int i = 0; i < medias.length(); i++) {
+                    JSONObject media = medias.getJSONObject(i);
+
+                    if (media.getString("type").equals("photo")) {
+                        tweet.photoUrls.add(media.getString("media_url"));
+                    }
+                }
+            }
         } catch (JSONException e) {
 
             e.printStackTrace();

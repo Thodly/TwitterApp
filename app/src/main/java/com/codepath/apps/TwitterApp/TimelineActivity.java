@@ -1,27 +1,34 @@
 package com.codepath.apps.TwitterApp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.codepath.apps.TwitterApp.models.Tweet;
+import com.codepath.apps.TwitterApp.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends ActionBarActivity {
-private TwitterClient client;
+public class TimelineActivity extends AppCompatActivity {
+    private TwitterClient client;
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +41,29 @@ private TwitterClient client;
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
                 loadNextDataFromApi(page);
-                // or loadNextDataFromApi(totalItemsCount);
-                return true; // ONLY if more data is actually being loaded; false otherwise.
+                return true;
             }
         });
         client = TwitterApplication.getRestClient();
        populateTimeline();
+        fetchUserCredentials();
     }
+
+    public void fetchUserCredentials() {
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.fromJSON(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
     private void populateTimeline(){
         client.getHomeTimeline(1, new JsonHttpResponseHandler() {
             @Override
@@ -72,10 +92,11 @@ private TwitterClient client;
         return super.onOptionsItemSelected(item);
     }
     public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyDataSetChanged()`
+
+    }
+    public void onCompose() {
+        Intent i = new Intent(this, Compose.class);
+        i.putExtra("user", (Serializable) user);
+        startActivityForResult(i, 10);
     }
 }

@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Home Timeline"
-                android:textSize="35dp"
+                android:textSize="20dp"
                 android:textColor="#ffffff"/>
             <ImageView
                 android:id="@+id/compose"
@@ -38,6 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="70dp"
                 app:srcCompat="@drawable/ic_action_compose"
+                android:onClick="onCompose"
                 android:showAsAction="ifRoom"/>
             <ImageView
                 android:id="@+id/user"

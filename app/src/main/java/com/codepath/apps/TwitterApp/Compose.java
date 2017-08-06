@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class Compose extends AppCompatActivity {
-
+    User user;
     TextView tvuserNameOf;
     TextView screenNameOfcompose;
     ImageView ivProfileCompose;
@@ -36,12 +38,12 @@ public class Compose extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        user = (User) getIntent().getSerializableExtra("user");
         client = TwitterApplication.getRestClient();
         setUpMyView();
 
     }
     public void setUpMyView(){
-        User user = (User) getIntent().getSerializableExtra("authUser");
         edtBody = (EditText) findViewById(R.id.edtBody);
         tvuserNameOf = (TextView) findViewById(R.id.tvuserNameOf);
         screenNameOfcompose = (TextView) findViewById(R.id.screenNameOfcompose);
@@ -53,9 +55,29 @@ public class Compose extends AppCompatActivity {
         if (!TextUtils.isEmpty(myProfileImg)){
             Picasso.with(this).load(myProfileImg).into(ivProfileCompose);
         }
-
+        listenBodyText();
     }
+    public void listenBodyText() {
+        // count remaining characters on text changed
+        edtBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int remainCount = 140 - editable.length();
+                screenNameOfcompose.setText(String.valueOf(remainCount));
+            }
+
+        });
+    }
     public void onTweet(View view){
         String status =  edtBody.getText().toString();
         Toast.makeText(this,"I tweet " ,Toast.LENGTH_LONG).show();

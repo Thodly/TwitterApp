@@ -6,6 +6,7 @@ import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class TwitterClient extends OAuthBaseClient {
@@ -30,6 +31,12 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("page", String.valueOf(page));
 		getClient().get(apiUrl, params, handler);
 	}
+	public void getUserTimeline (String screenName, AsyncHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+        params.put("ScreenName",screenName);
+		getClient().get(apiUrl,params,handler);
+	}
 
 	public void postTweet(String body, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
@@ -40,10 +47,13 @@ public class TwitterClient extends OAuthBaseClient {
 
 	public void postUpdateStatus (String status, AsyncHttpResponseHandler handler){
 		String apiUrl =  getApiUrl("statuses/update.json");
-		//specifie the params
 		RequestParams params = new RequestParams();
 		params.put("status",status);
-		//execute the request
 		getClient().post(apiUrl, params, handler);
+	}
+
+	public void getUserInfo(JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		getClient().get(apiUrl, handler);
 	}
 }
