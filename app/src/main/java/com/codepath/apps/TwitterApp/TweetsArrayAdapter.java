@@ -31,10 +31,16 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
+        TextView tvCreateAt = (TextView) convertView.findViewById(R.id.tvDate);
         tvUserName.setText(tweet.getUser().getScreenName());
         tvBody.setText(tweet.getBody());
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
+        ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
+        ivMediaPhoto.setImageResource(0);
+
+        String timeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(tweet.getCreatedAt());
+        tvCreateAt.setText(timeAgo);
 
         return convertView;
     }

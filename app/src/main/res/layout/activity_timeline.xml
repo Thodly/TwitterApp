@@ -6,14 +6,58 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.TwitterApp.TimelineActivity">
 
-    <ListView
-        android:id="@+id/lvTweets"
-        android:layout_width="wrap_content"
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="-26dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" />
+        android:background="@android:color/holo_blue_light"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Home Timeline"
+                android:textSize="35dp"
+                android:textColor="#ffffff"/>
+            <ImageView
+                android:id="@+id/compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="70dp"
+                app:srcCompat="@drawable/ic_action_compose"
+                android:showAsAction="ifRoom"/>
+            <ImageView
+                android:id="@+id/user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="22dp"
+                app:srcCompat="@drawable/ic_action_user"
+                android:showAsAction="ifRoom"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.AppBarLayout>
+
+    <ListView
+        android:layout_below="@id/toolbar"
+        android:id="@+id/lvTweets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
 </RelativeLayout>
