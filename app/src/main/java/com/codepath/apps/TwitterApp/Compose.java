@@ -23,12 +23,12 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+
 public class Compose extends AppCompatActivity {
     User user;
-    TextView tvuserNameOf;
-    TextView screenNameOfcompose;
+    TextView tvRemainingChars;
     ImageView ivProfileCompose;
-    EditText edtBody;
+    EditText etBody;
     TwitterClient client;
 
     @Override
@@ -44,14 +44,14 @@ public class Compose extends AppCompatActivity {
 
     }
     public void setUpMyView(){
-        edtBody = (EditText) findViewById(R.id.edtBody);
-        tvuserNameOf = (TextView) findViewById(R.id.tvuserNameOf);
-        screenNameOfcompose = (TextView) findViewById(R.id.screenNameOfcompose);
-        ivProfileCompose = (ImageView) findViewById(R.id.ivProfileCompose);
-        tvuserNameOf.setText(user.getName());
-        screenNameOfcompose.setText(String.format("@%s",user.getScreenName()));
+        etBody = (EditText) findViewById(R.id.etBody);
+        TextView tvUserName = (TextView) findViewById(R.id.tvUserName);
+        TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvRemainingChars = (TextView) findViewById(R.id.tvRemainingChars);
+        ivProfileCompose = (ImageView) findViewById(R.id.ivProfileImage);
         String myProfileImg = user.getProfileImageUrl();
-
+        tvUserName.setText(user.getName());
+        tvScreenName.setText(String.format("@%s", user.getScreenName()));
         if (!TextUtils.isEmpty(myProfileImg)){
             Picasso.with(this).load(myProfileImg).into(ivProfileCompose);
         }
@@ -59,7 +59,7 @@ public class Compose extends AppCompatActivity {
     }
     public void listenBodyText() {
         // count remaining characters on text changed
-        edtBody.addTextChangedListener(new TextWatcher() {
+        etBody.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -73,13 +73,13 @@ public class Compose extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 int remainCount = 140 - editable.length();
-                screenNameOfcompose.setText(String.valueOf(remainCount));
+                tvRemainingChars.setText(String.valueOf(remainCount));
             }
 
         });
     }
     public void onTweet(View view){
-        String status =  edtBody.getText().toString();
+        String status =  etBody.getText().toString();
         Toast.makeText(this,"I tweet " ,Toast.LENGTH_LONG).show();
         client.postUpdateStatus(status, new JsonHttpResponseHandler(){
             @Override
@@ -96,7 +96,7 @@ public class Compose extends AppCompatActivity {
             public void onFailure (int statusCode , Header[] headers, Throwable throwable, JSONObject errorResponse){
                 Log.d("DEBUG", errorResponse.toString());
                 if(throwable.getMessage().contains("resolve host")){
-                    Toast.makeText(Compose.this, " no connexion internet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Compose.this, " no connexion to internet", Toast.LENGTH_LONG).show();
                 }
             }
         });

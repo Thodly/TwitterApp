@@ -34,15 +34,24 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvCreateAt = (TextView) convertView.findViewById(R.id.tvDate);
+        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
         tvUserName.setText(tweet.getUser().getScreenName());
+        tvScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
         tvBody.setText(tweet.getBody());
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
         ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
         ivMediaPhoto.setImageResource(0);
+        TextView tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
+        TextView tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
+
 
         String timeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(tweet.getCreatedAt());
         tvCreateAt.setText(timeAgo);
+        tvRetweetCount.setText(CountFormatter.format(tweet.getRetweetCount()));
+        tvFavoriteCount.setText(CountFormatter.format(tweet.getFavoriteCount()));
+
+
 
         return convertView;
     }

@@ -17,6 +17,8 @@ public class Tweet implements Serializable{
     private User user;
     private String createdAt;
     private ArrayList<String> photoUrls;
+    private Integer retweetCount;
+    private Integer favoriteCount;
 
     public User getUser() {
         return user;
@@ -35,6 +37,13 @@ public class Tweet implements Serializable{
     public ArrayList<String> getPhotoUrls() {
         return photoUrls;
     }
+    public Integer getRetweetCount() {
+        return retweetCount;
+    }
+    public Integer getFavoriteCount() {
+        return favoriteCount;
+    }
+
     public static Tweet fromJSON(JSONObject jsonObject){
         Tweet tweet = new Tweet();
         try {
@@ -42,6 +51,9 @@ public class Tweet implements Serializable{
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
+            tweet.retweetCount = jsonObject.getInt("retweet_count");
+            tweet.favoriteCount = jsonObject.getInt("favorite_count");
 
             tweet.photoUrls = new ArrayList<>();
             if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {

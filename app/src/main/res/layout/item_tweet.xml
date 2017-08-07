@@ -30,17 +30,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:maxLines="3"
+        android:maxLines="2"
         android:text="A bestfriend is the one that will allways stay by your side whatever happen to you in life"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_alignBottom="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -55,28 +56,53 @@
         android:id="@+id/ivFavorite"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         app:srcCompat="@drawable/like_action"
-        android:layout_marginEnd="14dp"
         android:layout_below="@+id/tvBody"
-        android:layout_toStartOf="@+id/tvDate" />
+        android:layout_toEndOf="@+id/tvRetweetCount"
+        android:layout_marginStart="27dp" />
 
     <ImageView
         android:id="@+id/ivRetweet"
         android:layout_width="20dp"
         android:layout_height="20dp"
         app:srcCompat="@drawable/retweet_action"
-        android:layout_marginEnd="29dp"
         android:layout_alignTop="@+id/ivFavorite"
-        android:layout_toStartOf="@+id/ivFavorite" />
+        android:layout_toEndOf="@+id/tvUserName"
+        android:layout_marginStart="19dp" />
 
     <ImageView
         android:id="@+id/ivReply"
         android:layout_width="20dp"
         android:layout_height="20dp"
         app:srcCompat="@drawable/reply_action"
-        android:layout_marginEnd="49dp"
-        android:layout_alignTop="@+id/ivRetweet"
-        android:layout_alignEnd="@+id/ivRetweet" />
+        android:layout_below="@+id/ivMediaPhoto"
+        android:layout_toEndOf="@+id/ivProfileImage" />
 
+    <TextView
+        android:id="@+id/tvRetweetCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/ivMediaPhoto"
+        android:layout_toEndOf="@+id/ivRetweet" />
+
+    <TextView
+        android:id="@+id/tvFavoriteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/ivMediaPhoto"
+        android:layout_toEndOf="@+id/ivFavorite" />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginRight="40dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="screen_name"
+        android:textColor="#AAA"
+        android:textSize="10sp" />
 </RelativeLayout>
