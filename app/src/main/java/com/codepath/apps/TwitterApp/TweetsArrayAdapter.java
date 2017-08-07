@@ -1,6 +1,7 @@
 package com.codepath.apps.TwitterApp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,21 +39,24 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         tvUserName.setText(tweet.getUser().getScreenName());
         tvScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
         tvBody.setText(tweet.getBody());
-        ivProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
         ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
         ivMediaPhoto.setImageResource(0);
         TextView tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
         TextView tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
-
 
         String timeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(tweet.getCreatedAt());
         tvCreateAt.setText(timeAgo);
         tvRetweetCount.setText(CountFormatter.format(tweet.getRetweetCount()));
         tvFavoriteCount.setText(CountFormatter.format(tweet.getFavoriteCount()));
 
+        ivProfileImage.setImageResource(android.R.color.transparent);
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
 
+        if (tweet.getPhotoUrls().size() > 0) {
+            String mediaPhoto = tweet.getPhotoUrls().get(0);
+            }
 
+   
         return convertView;
     }
 }
