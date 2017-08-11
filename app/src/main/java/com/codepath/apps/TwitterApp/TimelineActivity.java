@@ -2,15 +2,13 @@ package com.codepath.apps.TwitterApp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.codepath.apps.TwitterApp.Tools.EndlessScrollListener;
 import com.codepath.apps.TwitterApp.models.Tweet;
 import com.codepath.apps.TwitterApp.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;

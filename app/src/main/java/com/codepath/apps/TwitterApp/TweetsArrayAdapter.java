@@ -1,7 +1,6 @@
 package com.codepath.apps.TwitterApp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.TwitterApp.Tools.CountFormatter;
+import com.codepath.apps.TwitterApp.Tools.ParseRelativeDate;
 import com.codepath.apps.TwitterApp.models.Tweet;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by thodlydugue on 8/4/2017.

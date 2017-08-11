@@ -1,4 +1,4 @@
-package com.codepath.apps.TwitterApp;
+package com.codepath.apps.TwitterApp.Tools;
 
 import android.widget.AbsListView;
 
