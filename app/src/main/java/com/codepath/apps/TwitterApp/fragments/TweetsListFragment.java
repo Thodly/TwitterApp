@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.codepath.apps.TwitterApp.R;
-import com.codepath.apps.TwitterApp.Tools.EndlessScrollListener;
 import com.codepath.apps.TwitterApp.TweetsArrayAdapter;
 import com.codepath.apps.TwitterApp.models.Tweet;
 
@@ -30,13 +29,6 @@ public class TweetsListFragment  extends Fragment{
      View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
         lvTweets.setAdapter((aTweets));
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemsCount) {
-                loadNextDataFromApi(page);
-                return true;
-            }
-        });
         return v;
     }
 
@@ -47,11 +39,11 @@ public class TweetsListFragment  extends Fragment{
         aTweets = new TweetsArrayAdapter(getActivity(), tweets);
     }
     public void loadNextDataFromApi(int offset) {
-
     }
 
     public void addAll(List<Tweet> tweets){
-     aTweets.addAll(tweets);
+        aTweets.addAll(tweets);
+        aTweets.notifyDataSetChanged();
     }
 
 }

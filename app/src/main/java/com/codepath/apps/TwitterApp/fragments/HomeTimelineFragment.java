@@ -37,7 +37,12 @@ public class HomeTimelineFragment extends TweetsListFragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
+
+                if(throwable != null)
+                    throwable.printStackTrace();
+
+                if(errorResponse != null)
+                    Log.d("DEBUG", errorResponse.toString());
             }
         });
     }

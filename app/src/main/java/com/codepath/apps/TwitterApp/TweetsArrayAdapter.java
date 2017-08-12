@@ -55,7 +55,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             String mediaPhoto = tweet.getPhotoUrls().get(0);
             }
 
-   
+
         return convertView;
     }
 }

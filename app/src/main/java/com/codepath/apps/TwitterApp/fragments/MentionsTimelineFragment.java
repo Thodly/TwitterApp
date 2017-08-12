@@ -12,8 +12,6 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-import static java.util.Collections.addAll;
-
 /**
  * Created by Thodly on 8/11/2017.
  */
@@ -29,13 +27,11 @@ public class MentionsTimelineFragment extends TweetsListFragment {
     }
 
     private void populateTimeline(){
-        client.getMentionsTimeline(1, new JsonHttpResponseHandler() {
+        client.getMentionsTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.d("DEBUG",json.toString());
                 addAll(Tweet.fromJSONArray(json));
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
