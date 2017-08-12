@@ -25,17 +25,19 @@ public class TwitterClient extends OAuthBaseClient {
 				String.format(REST_CALLBACK_URL_TEMPLATE, context.getString(R.string.intent_host),
 						context.getString(R.string.intent_scheme), context.getPackageName(), FALLBACK_URL));
 	}
+
 	public void getHomeTimeline(int page, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("page", String.valueOf(page));
 		getClient().get(apiUrl, params, handler);
 	}
-	public void getUserTimeline (String screenName, AsyncHttpResponseHandler handler){
+
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/user_timeline.json");
 		RequestParams params = new RequestParams();
-        params.put("ScreenName",screenName);
-		getClient().get(apiUrl,params,handler);
+		params.put("ScreenName", screenName);
+		getClient().get(apiUrl, params, handler);
 	}
 
 	public void postTweet(String body, AsyncHttpResponseHandler handler) {
@@ -45,10 +47,10 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().post(apiUrl, params, handler);
 	}
 
-	public void postUpdateStatus (String status, AsyncHttpResponseHandler handler){
-		String apiUrl =  getApiUrl("statuses/update.json");
+	public void postUpdateStatus(String status, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
-		params.put("status",status);
+		params.put("status", status);
 		getClient().post(apiUrl, params, handler);
 	}
 

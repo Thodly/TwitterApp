@@ -21,28 +21,17 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+import static com.codepath.apps.TwitterApp.R.id.lvTweets;
+
 public class TimelineActivity extends AppCompatActivity {
     private TwitterClient client;
-    private TweetsArrayAdapter aTweets;
-    private ArrayList<Tweet> tweets;
-    private ListView lvTweets;
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
-        tweets = new ArrayList<>();
-        aTweets = new TweetsArrayAdapter(this, tweets);
-        lvTweets.setAdapter((aTweets));
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemsCount) {
-                loadNextDataFromApi(page);
-                return true;
-            }
-        });
+
         client = TwitterApplication.getRestClient();
        populateTimeline();
         fetchUserCredentials();
@@ -89,9 +78,7 @@ public class TimelineActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void loadNextDataFromApi(int offset) {
 
-    }
     public void onCompose() {
         Intent i = new Intent(this, Compose.class);
         i.putExtra("user", (Serializable) user);
