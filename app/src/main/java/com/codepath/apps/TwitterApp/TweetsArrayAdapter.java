@@ -1,6 +1,7 @@
 package com.codepath.apps.TwitterApp;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.codepath.apps.TwitterApp.models.Tweet;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by thodlydugue on 8/4/2017.
@@ -51,10 +54,21 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
 
+        String profileImageUrl = tweet.getUser().getProfileImageUrl();
+        if(!TextUtils.isEmpty(profileImageUrl)) {
+            Picasso.with(getContext()).load(profileImageUrl)
+                    .transform(new RoundedCornersTransformation(4, 4))
+                    .into(ivProfileImage);
+        }
+
         if (tweet.getPhotoUrls().size() > 0) {
             String mediaPhoto = tweet.getPhotoUrls().get(0);
+            if(!TextUtils.isEmpty(mediaPhoto)) {
+                Picasso.with(getContext()).load(mediaPhoto)
+                        .transform(new RoundedCornersTransformation(20, 20))
+                        .into(ivMediaPhoto);
             }
-
+        }
 
         return convertView;
     }

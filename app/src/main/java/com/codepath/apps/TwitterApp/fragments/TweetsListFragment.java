@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 import com.codepath.apps.TwitterApp.R;
 import com.codepath.apps.TwitterApp.TweetsArrayAdapter;
+import com.codepath.apps.TwitterApp.TwitterClient;
 import com.codepath.apps.TwitterApp.models.Tweet;
+import com.codepath.apps.TwitterApp.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class TweetsListFragment  extends Fragment{
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
+    private TwitterClient client;
+    protected User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class TweetsListFragment  extends Fragment{
         tweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(getActivity(), tweets);
     }
+
     public void loadNextDataFromApi(int offset) {
     }
 

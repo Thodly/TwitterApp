@@ -6,6 +6,7 @@ import android.util.Log;
 import com.codepath.apps.TwitterApp.TwitterApplication;
 import com.codepath.apps.TwitterApp.TwitterClient;
 import com.codepath.apps.TwitterApp.models.Tweet;
+import com.codepath.apps.TwitterApp.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -13,11 +14,13 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+import static java.util.Collections.addAll;
+
 /**
- * Created by Thodly on 8/11/2017.
+ * Created by Thodly on 8/12/2017.
  */
 
-public class HomeTimelineFragment extends TweetsListFragment {
+public class UserTimelineFragment extends TweetsListFragment {
     private TwitterClient client;
 
     @Override
@@ -27,21 +30,25 @@ public class HomeTimelineFragment extends TweetsListFragment {
         populateTimeline();
     }
 
+    public static UserTimelineFragment newInstance(String screen_name){
+       UserTimelineFragment userFragment = new UserTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("screen_name", screen_name);
+        userFragment.setArguments(args);
+        return userFragment;
+    }
+
     private void populateTimeline(){
-        client.getHomeTimeline(1, new JsonHttpResponseHandler() {
+        String screenName = getArguments().getString("screen_name");
+        client.getUserTimeline(screenName,new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 addAll(Tweet.fromJSONArray(json));
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                if(throwable != null)
-                    throwable.printStackTrace();
-
-                if(errorResponse != null)
-                    Log.d("DEBUG", errorResponse.toString());
+                Log.d("DEBUG", errorResponse.toString());
             }
         });
     }

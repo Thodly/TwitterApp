@@ -33,11 +33,24 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
+	public void getMentionsTimeline(JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		getClient().get(apiUrl, params, handler);
+
+	}
 	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/user_timeline.json");
 		RequestParams params = new RequestParams();
+		params.put("count", 25);
 		params.put("ScreenName", screenName);
 		getClient().get(apiUrl, params, handler);
+	}
+
+	public void getUserInfo(JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		getClient().get(apiUrl, null, handler);
 	}
 
 	public void postTweet(String body, AsyncHttpResponseHandler handler) {
@@ -54,18 +67,15 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().post(apiUrl, params, handler);
 	}
 
-	public void getUserInfo(JsonHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("account/verify_credentials.json");
-		getClient().get(apiUrl, handler);
-	}
-
-    public void getMentionsTimeline(JsonHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+	public void getProfileBanner(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/profile_banner.json");
 		RequestParams params = new RequestParams();
-		params.put("count", 25);
+		params.put("screen_name", screenName);
 		getClient().get(apiUrl, params, handler);
-
 	}
+
+
+
 
 
 }

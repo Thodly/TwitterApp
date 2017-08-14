@@ -36,8 +36,8 @@ public class Compose extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        //ActionBar actionBar = getSupportActionBar();
+       // actionBar.hide();
         user = (User) getIntent().getSerializableExtra("user");
         client = TwitterApplication.getRestClient();
         setUpMyView();
@@ -80,7 +80,6 @@ public class Compose extends AppCompatActivity {
     }
     public void onTweet(View view){
         String status =  etBody.getText().toString();
-        Toast.makeText(this,"I tweet " ,Toast.LENGTH_LONG).show();
         client.postUpdateStatus(status, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -102,10 +101,4 @@ public class Compose extends AppCompatActivity {
         });
 
     }
-    public void onClose(View view){
-        finish();
-        overridePendingTransition(0,0);
-    }
-
-
 }

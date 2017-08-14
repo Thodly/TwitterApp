@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,21 +32,45 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 import static com.codepath.apps.TwitterApp.R.id.lvTweets;
-import static com.codepath.apps.TwitterApp.R.id.user;
 import static java.util.Collections.addAll;
 
 public class TimelineActivity extends AppCompatActivity {
+
+    private User user;
+    protected TwitterClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayShowHomeEnabled(true);
+        actionbar.setDisplayUseLogoEnabled(true);
+        actionbar.setLogo(R.drawable.twittericon);
+        actionbar.setTitle("");
+
+        client = TwitterApplication.getRestClient();
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabStrip.setViewPager(vpPager);
-    }
+        fetchUserCredentials();
 
+    }
+    public void fetchUserCredentials() {
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.fromJSON(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
@@ -53,9 +79,11 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.compose){
+        if (id == R.id.action_profile) {
+            onProfileView();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
@@ -85,5 +113,10 @@ public class TimelineActivity extends AppCompatActivity {
         public int getCount() {
             return tabTitles.length;
         }
+    }
+    public void onProfileView(){
+    Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", user);
+        startActivity(i);
     }
 }

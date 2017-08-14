@@ -5,5 +5,5 @@
     <string name="login_label">Connect to Twitter</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cptwitterapp</string>
-    <string name="title_activity_timeline">Home Timeline</string>
+    <string name="title_activity_timeline">Thodly\'s Tweets</string>
 </resources>
